@@ -10,10 +10,10 @@ const db = mysql.createConnection (
         // Input your SQL password here (do not upload to github!)
         password: "",
         // This is name of the database that you will be utilising
-        database: "employees"
+        database: "employee_tracker"
     },
     // It is always important to confirm that users are connected to the database
-    console.log("You are know connected to the employees database!")
+    console.log("You are now connected to the employees database!")
 );
 
 // export the connection
