@@ -26,9 +26,10 @@ VALUES
 ('Chris', 'Lightfellow', 4, 1),
 ('Geralt', 'of Rivia', 5, 1),
 ('Cloud', 'Strife', 5, 1),
-('Gandalf', 'Stormcrow', 6, 1),
+('Gandalf (the Grey)', 'Stormcrow', 6, 1),
 ('Aerith', 'Gainsborough', 7, 2),
 ('Chloe', 'Price', 8, 2),
 ('Max', 'Caulfield', 8, 2),
+('Larry', 'David', 8, 2),
 ('Lionel', 'Hutz', 9, 3),
 ('Phoenix', 'Wright', 9, 3);

@@ -27,6 +27,7 @@ function questions () {
             "Quit?",
         ],
     })
+    // these are the options for the user to choose from
     .then(function (userInput) {
         if (userInput.welcome === "View All Departments") {
             getDept();
@@ -48,7 +49,7 @@ function questions () {
         
     })
 }
-
+// gets the department
 function getDept() {
     const sql = `SELECT * FROM department;`;
     db.query(sql, function (err, res) {
@@ -57,7 +58,7 @@ function getDept() {
         questions();
     });
 }
-
+// gets the employee roles, their salary, and their dept
 function getRoles() {
     const sql = `SELECT A.id, A.title, A.salary, B.dept_name
     FROM roles AS A
@@ -69,7 +70,7 @@ function getRoles() {
         questions();
     })
 }
-
+// gets the employee names, role, salary and managers
 function getEmpl() {
     const sql = `SELECT A.*, B.title, B.salary, B.department_id
     FROM employees AS A
@@ -82,6 +83,28 @@ function getEmpl() {
     })
 }
 
+// add a department
+function addDept() {
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "deptName",
+            message: "What is the name of the department you would like to add?",
+        },
+    ])
+    .then(function (inform) {
+        const department = inform.deptName;
+
+        const sql = `INSERT INTO department (dept_name)
+        VALUES ('${department}')`;
+        db.query(sql, function (err, res) {
+            if (err) throw err;
+            console.table(res);
+            questions();
+        });
+    });
+}
 questions();
 
 
