@@ -4,9 +4,10 @@ const inquirer = require("inquirer");
 const db = require("./config/connection.js");
 // thow an error if the user fails to connect
 const table = require("console.table");
+
 db.connect((err) => {
     if (err) throw err;
-    console.log('You are ready to begin!');
+
 });
 
 // start questions with Inquirer
@@ -20,7 +21,6 @@ function questions () {
             "View All Departments",
             "View All Current Roles",
             "View Employee Roster",
-            "View Employee by Department Name",
             "Add a New Department",
             "Add a New Role",
             "Add a New Employee",
@@ -34,8 +34,6 @@ function questions () {
             getRoles();
         } else if (userInput.welcome === "View Employee Roster") {
             getEmpl();
-        } else if (userInput.welcome === "View Employee by Department Name") {
-            getEmplDept();
         } else if (userInput.welcome === "Add a New Department") {
             addDept();
         } else if (userInput.welcome === "Add a New Role") {
@@ -43,6 +41,8 @@ function questions () {
         } else if (userInput.welcome === "Add a new Employee") {
             addNewEmpl();
         } else if (userInput.welcome === "Quit?") {
+            console.log("Thank you for using Employee Tracker! Have a good day!");
+            db.end();
             return;
         }
         
@@ -59,7 +59,22 @@ function getDept() {
 }
 
 function getRoles() {
-    const sql = 'SELECT * FROM roles;';
+    const sql = `SELECT A.id, A.title, A.salary, B.dept_name
+    FROM roles AS A
+    LEFT JOIN department AS B
+    ON B.id = A.department_id;`;
+    db.query(sql, function(err, res) {
+        if (err) throw err;
+        console.table(res);
+        questions();
+    })
+}
+
+function getEmpl() {
+    const sql = `SELECT A.*, B.title, B.salary, B.department_id
+    FROM employees AS A
+    LEFT JOIN roles as B
+    ON B.id = A.role_id;`;
     db.query(sql, function(err, res) {
         if (err) throw err;
         console.table(res);
