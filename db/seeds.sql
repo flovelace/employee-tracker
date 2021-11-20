@@ -8,7 +8,7 @@ VALUES
 INSERT INTO roles (title, salary, department_id)
 VALUES
 ('Engineering Manager', 125000, 1),
-('Customer Support Manager', 95000, 1),
+('Director of Customer Experience', 95000, 1),
 ('Senior Legal Counsel', 150000, 1),
 ('Senior Developer', 90000, 2),
 ('Junior Developer', 60000, 2),

@@ -39,8 +39,8 @@ function questions () {
             addDept();
         } else if (userInput.welcome === "Add a New Role") {
             addRole();
-        } else if (userInput.welcome === "Add a new Employee") {
-            addNewEmpl();
+        } else if (userInput.welcome === "Add a New Employee") {
+            addEmpl();
         } else if (userInput.welcome === "Quit?") {
             console.log("Thank you for using Employee Tracker! Have a good day!");
             db.end();
@@ -86,18 +86,94 @@ function getEmpl() {
 // add a department
 function addDept() {
     inquirer
-    .prompt([
+    .prompt ([
         {
             type: "input",
             name: "deptName",
             message: "What is the name of the department you would like to add?",
         },
     ])
-    .then(function (inform) {
-        const department = inform.deptName;
+    .then(function (deptUpdate) {
+        const department = deptUpdate.deptName;
 
         const sql = `INSERT INTO department (dept_name)
         VALUES ('${department}')`;
+        db.query(sql, function (err, res) {
+            if (err) throw err;
+            console.table(res);
+            questions();
+        });
+    });
+}
+
+// add a role
+function addRole() {
+    inquirer
+    .prompt ([
+        {
+            type: "input",
+            name: "roleName",
+            message: "Please enter the name of the role you wish to add.",
+        },
+        {
+            type: "input",
+            name: "salary",
+            message: "Please enter the salary for this role.",
+        },
+        {
+            type: "input",
+            name: "deptIdentifier",
+            message: "Please enter the ID for the department.",
+        }
+    ])
+    .then(function (roleUpdate) {
+        const newRole = roleUpdate.roleName;
+        const newSalary = roleUpdate.salary;
+        const newIdentifier = roleUpdate.deptIdentifier;
+
+        const sql = `INSERT INTO roles (title, salary, department_id)
+        VALUES ('${newRole}', '${newSalary}', '${newIdentifier}')`;
+        db.query(sql, function (err, res) {
+            if (err) throw err;
+            console.table(res);
+            questions();
+        });
+
+    });
+}
+
+function addEmpl() {
+    inquirer
+    .prompt ([
+        {
+            type: "input",
+            name: "firstName",
+            message: "Please enter the employee's first name.",
+        },
+        {
+            type: "input",
+            name: "lastName",
+            message: "Please enter the employee's last name.",
+        },
+        {
+            type: "input",
+            name: "emplRole",
+            message: "Please enter the employee's role ID at the company.",
+        },
+        {
+            type: "input",
+            name: "managerID",
+            message: "Please enter the manager's ID.",
+        }
+    ])
+    .then(function (emplUpdate) {
+        const fName = emplUpdate.firstName;
+        const lName = emplUpdate.lastName;
+        const eRole = emplUpdate.emplRole;
+        const manId = emplUpdate.managerID;
+
+        const sql = `INSERT INTO employees (first_name, last_name, role_id, manager_id)
+        VALUES ('${fName}', '${lName}', '${eRole}', '${manId}')`;
         db.query(sql, function (err, res) {
             if (err) throw err;
             console.table(res);
