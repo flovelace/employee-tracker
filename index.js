@@ -1,10 +1,10 @@
-// Enable the iquirere package for the questions
+// Enable the iquirer package for the questions
 const inquirer = require("inquirer");
 // enable to connection to the db
 const db = require("./config/connection.js");
-// thow an error if the user fails to connect
-const table = require("console.table");
 
+const table = require("console.table");
+// throw an error if the user fails to connect
 db.connect((err) => {
     if (err) throw err;
 
@@ -141,7 +141,7 @@ function addRole() {
 
     });
 }
-
+// add a new employee
 function addEmpl() {
     inquirer
     .prompt ([
@@ -181,6 +181,7 @@ function addEmpl() {
         });
     });
 }
+// function call for questions
 questions();
 
 
